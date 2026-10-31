@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg-ground: #F6F3EC;
+  --bg-surface: #ECE7DC;
+  --bg-surface-alt: #E2DDD0;
+  --text-ink: #161513;
+  --text-muted: #5C5852;
+  --accent: #B83A24;
+  --accent-hover: #9A2E1B;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-ground);
+    color: var(--text-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    line-height: 0.96;
+  }
+}
