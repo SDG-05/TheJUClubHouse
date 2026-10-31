@@ -1,29 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
-import apiClient from './api/client';
+import HomePage from './pages/HomePage';
+import ClubDirectoryPage from './pages/ClubDirectoryPage';
+import ClubProfilePage from './pages/ClubProfilePage';
 
-function PhaseTwoHarness({ title }) {
+function PhaseFourPlaceholder({ title }) {
   const { user, login, logout } = useAuth();
-  const [clubs, setClubs] = useState([]);
-  const [statusMsg, setStatusMsg] = useState('');
-
-  useEffect(() => {
-    apiClient
-      .get('/clubs/')
-      .then((res) => setClubs(res.data))
-      .catch((err) => setStatusMsg(err.message));
-  }, [user]);
 
   const handleQuickLogin = async (email) => {
-    try {
-      const loggedIn = await login(email, 'Pass1234!');
-      setStatusMsg(`Authenticated as ${loggedIn.name} (${loggedIn.role})`);
-    } catch (err) {
-      setStatusMsg(err.response?.data?.detail || 'Login failed');
-    }
+    await login(email, 'Pass1234!');
   };
 
   return (
@@ -34,31 +22,37 @@ function PhaseTwoHarness({ title }) {
             {title}
           </h1>
           <p className="text-lg text-ink max-w-xl">
-            Phase 2 API Client, Mock Server, AuthContext, and Role Guard foundation is active.
-            All 5 seeded accounts and 3 Jahangirnagar University clubs are loaded in memory.
+            This view will be replaced in Phase 4 (Auth Pages &amp; Role Dashboards). Use the quick
+            role switches below to test the Phase 3 Smart Membership Button on any Club Profile.
           </p>
-
-          <div className="pt-4 flex flex-wrap gap-3">
+          <div className="pt-2 flex flex-wrap gap-3">
             <button
               type="button"
               onClick={() => handleQuickLogin('student1@university.edu')}
               className="px-4 py-2.5 bg-ink text-ground text-sm font-medium hover:bg-accent transition-colors"
             >
-              Test Student Login
+              Switch to Student 1
+            </button>
+            <button
+              type="button"
+              onClick={() => handleQuickLogin('student2@university.edu')}
+              className="px-4 py-2.5 bg-surface text-ink text-sm font-medium hover:bg-surfaceAlt transition-colors"
+            >
+              Switch to Student 2
             </button>
             <button
               type="button"
               onClick={() => handleQuickLogin('manager.robotics@university.edu')}
               className="px-4 py-2.5 bg-surface text-ink text-sm font-medium hover:bg-surfaceAlt transition-colors"
             >
-              Test Manager Login
+              Switch to Robotics Manager
             </button>
             <button
               type="button"
               onClick={() => handleQuickLogin('admin@university.edu')}
               className="px-4 py-2.5 bg-surface text-ink text-sm font-medium hover:bg-surfaceAlt transition-colors"
             >
-              Test Admin Login
+              Switch to Admin
             </button>
             {user && (
               <button
@@ -66,33 +60,27 @@ function PhaseTwoHarness({ title }) {
                 onClick={logout}
                 className="px-4 py-2.5 bg-accent text-ground text-sm font-medium hover:bg-accentHover transition-colors"
               >
-                Clear Session
+                Sign out
               </button>
             )}
           </div>
-
-          {statusMsg && (
-            <p className="text-sm text-accent font-medium">{statusMsg}</p>
-          )}
         </div>
-
-        <div className="lg:col-span-5 bg-surface p-8 space-y-6">
-          <h2 className="font-display text-3xl text-ink">
-            Seeded Clubs ({clubs.length})
-          </h2>
-          <ul className="space-y-4">
-            {clubs.map((club) => (
-              <li key={club.id} className="bg-ground p-5 space-y-1">
-                <div className="flex items-baseline justify-between">
-                  <Link className="font-display text-2xl text-ink hover:text-accent transition-colors" to={`/clubs/${club.slug}`}>
-                    {club.name}
-                  </Link>
-                  <span className="text-sm text-muted">{club.category}</span>
-                </div>
-                <p className="text-sm text-muted">{club.description}</p>
-              </li>
-            ))}
-          </ul>
+        <div className="lg:col-span-5 bg-surface p-8 space-y-4">
+          <h2 className="font-display text-3xl text-ink">Test Club Profiles</h2>
+          <p className="text-sm text-muted">
+            Inspect the 4-state membership button after switching roles:
+          </p>
+          <div className="flex flex-col gap-2">
+            <Link className="p-4 bg-ground text-ink font-medium hover:text-accent" to="/clubs/robotics-club">
+              Robotics Club (/clubs/robotics-club)
+            </Link>
+            <Link className="p-4 bg-ground text-ink font-medium hover:text-accent" to="/clubs/debate-society">
+              Debate Society (/clubs/debate-society)
+            </Link>
+            <Link className="p-4 bg-ground text-ink font-medium hover:text-accent" to="/clubs/photography-club">
+              Photography Club (/clubs/photography-club)
+            </Link>
+          </div>
         </div>
       </div>
     </main>
@@ -106,16 +94,16 @@ export default function App() {
         <Navbar/>
         <div className="flex-1">
           <Routes>
-            <Route path="/" element={<PhaseTwoHarness title="Jahangirnagar Student Societies."/>} />
-            <Route path="/clubs" element={<PhaseTwoHarness title="Club Directory."/>} />
-            <Route path="/clubs/:slug" element={<PhaseTwoHarness title="Club Profile."/>} />
-            <Route path="/login" element={<PhaseTwoHarness title="Sign In."/>} />
-            <Route path="/register" element={<PhaseTwoHarness title="Student Registration."/>} />
+            <Route path="/" element={<HomePage/>} />
+            <Route path="/clubs" element={<ClubDirectoryPage/>} />
+            <Route path="/clubs/:slug" element={<ClubProfilePage/>} />
+            <Route path="/login" element={<PhaseFourPlaceholder title="Sign In."/>} />
+            <Route path="/register" element={<PhaseFourPlaceholder title="Student Registration."/>} />
             <Route
               path="/dashboard/student"
               element={
                 <ProtectedRoute allowedRoles={['STUDENT']}>
-                  <PhaseTwoHarness title="Student Memberships Desk."/>
+                  <PhaseFourPlaceholder title="Student Memberships Desk."/>
                 </ProtectedRoute>
               }
             />
@@ -123,7 +111,7 @@ export default function App() {
               path="/dashboard/manager"
               element={
                 <ProtectedRoute allowedRoles={['CLUB_MANAGER', 'ADMIN']}>
-                  <PhaseTwoHarness title="Club Manager Desk."/>
+                  <PhaseFourPlaceholder title="Club Manager Desk."/>
                 </ProtectedRoute>
               }
             />
@@ -131,7 +119,7 @@ export default function App() {
               path="/dashboard/admin"
               element={
                 <ProtectedRoute allowedRoles={['ADMIN']}>
-                  <PhaseTwoHarness title="University Admin Desk."/>
+                  <PhaseFourPlaceholder title="University Admin Desk."/>
                 </ProtectedRoute>
               }
             />
