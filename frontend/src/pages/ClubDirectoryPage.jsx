@@ -27,7 +27,9 @@ export default function ClubDirectoryPage() {
     const catFromUrl = searchParams.get('category') || 'ALL';
     const searchFromUrl = searchParams.get('search') || '';
     setSelectedCategory(catFromUrl);
-    setSearchInput(searchFromUrl);
+    // Only overwrite the input when the URL actually differs from what is typed,
+    // so trailing spaces mid-query are not stripped while the user types.
+    setSearchInput((prev) => (prev.trim() === searchFromUrl ? prev : searchFromUrl));
   }, [searchParams]);
 
   useEffect(() => {
