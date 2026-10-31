@@ -11,6 +11,7 @@ import RegisterPage from './pages/RegisterPage';
 import StudentDashboard from './pages/StudentDashboard';
 import ManagerDashboard from './pages/ManagerDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
   return (
@@ -48,6 +49,7 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="*" element={<NotFoundPage/>} />
           </Routes>
         </div>
         <footer className="bg-surface text-ink py-16 mt-24">

@@ -12,12 +12,29 @@ export function formatCategory(category) {
   return CATEGORY_LABELS[category] || 'University Society';
 }
 
+export function resolveLogoUrl(logo) {
+  if (!logo) return null;
+  if (
+    logo.startsWith('http://') ||
+    logo.startsWith('https://') ||
+    logo.startsWith('blob:') ||
+    logo.startsWith('data:')
+  ) {
+    return logo;
+  }
+  const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+  const origin = apiBase.replace(/\/api\/?$/, '');
+  return `${origin}${logo.startsWith('/') ? '' : '/'}${logo}`;
+}
+
 export default function ClubVisualPlate({ club, className = 'w-full h-64' }) {
-  if (club?.logo) {
+  const logoSrc = resolveLogoUrl(club?.logo);
+
+  if (logoSrc) {
     return (
       <div className={`overflow-hidden bg-surfaceAlt ${className}`}>
         <img
-          src={club.logo}
+          src={logoSrc}
           alt={`${club.name} emblem`}
           className="w-full h-full object-cover"
         />
