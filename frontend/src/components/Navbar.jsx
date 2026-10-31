@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const navLinkClass = ({ isActive }) =>
-  `text-base font-medium transition-colors ${
+  `whitespace-nowrap text-sm md:text-base font-medium transition-colors ${
     isActive ? 'text-accent' : 'text-ink hover:text-accent'
   }`;
 
@@ -35,7 +35,7 @@ export default function Navbar() {
           TheJUClubHouse
         </Link>
 
-        <nav aria-label="Main navigation" className="flex items-center gap-6 md:gap-10 order-3 md:order-2 w-full md:w-auto">
+        <nav aria-label="Main navigation" className="flex items-center gap-5 md:gap-10 order-3 md:order-2 w-full md:w-auto">
           <NavLink className={navLinkClass} end to="/">
             Almanac
           </NavLink>

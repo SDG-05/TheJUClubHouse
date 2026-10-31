@@ -142,7 +142,7 @@ export default function StudentDashboard() {
               Societies where your membership has been approved by the Club Manager.
             </p>
           </div>
-          <Link className="inline-block px-5 py-2.5 bg-ink text-ground text-sm font-medium hover:bg-accent transition-colors" to="/clubs">
+          <Link className="inline-block whitespace-nowrap px-5 py-2.5 bg-ink text-ground text-sm font-medium hover:bg-accent transition-colors" to="/clubs">
             Explore More Societies
           </Link>
         </div>
@@ -178,14 +178,14 @@ export default function StudentDashboard() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3">
-                  <Link className="px-4 py-2.5 bg-surface text-ink text-sm font-medium hover:bg-surfaceAlt transition-colors" to={clubPath(m)}>
+                  <Link className="whitespace-nowrap px-4 py-2.5 bg-surface text-ink text-sm font-medium hover:bg-surfaceAlt transition-colors" to={clubPath(m)}>
                     View Dossier
                   </Link>
                   <button
                     type="button"
                     disabled={busyId === m.id}
                     onClick={() => handleWithdrawOrLeave(m, true)}
-                    className="px-4 py-2.5 bg-ink text-ground text-sm font-medium hover:bg-accent transition-colors disabled:opacity-50"
+                    className="whitespace-nowrap px-4 py-2.5 bg-ink text-ground text-sm font-medium hover:bg-accent transition-colors disabled:opacity-50"
                   >
                     {busyId === m.id ? 'Leaving...' : 'Leave Club'}
                   </button>
@@ -249,7 +249,7 @@ export default function StudentDashboard() {
                         type="button"
                         disabled={busyId === m.id}
                         onClick={() => handleWithdrawOrLeave(m, false)}
-                        className="px-5 py-2.5 bg-ink text-ground text-sm font-medium hover:bg-accent transition-colors disabled:opacity-50"
+                        className="whitespace-nowrap px-5 py-2.5 bg-ink text-ground text-sm font-medium hover:bg-accent transition-colors disabled:opacity-50"
                       >
                         {busyId === m.id ? 'Withdrawing...' : 'Withdraw Application'}
                       </button>
@@ -258,7 +258,7 @@ export default function StudentDashboard() {
                         type="button"
                         disabled={busyId === m.id}
                         onClick={() => handleReapply(m)}
-                        className="px-5 py-2.5 bg-accent text-ground text-sm font-medium hover:bg-accentHover transition-colors disabled:opacity-50"
+                        className="whitespace-nowrap px-5 py-2.5 bg-accent text-ground text-sm font-medium hover:bg-accentHover transition-colors disabled:opacity-50"
                       >
                         {busyId === m.id ? 'Submitting...' : 'Reapply to Society'}
                       </button>

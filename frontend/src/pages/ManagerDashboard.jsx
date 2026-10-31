@@ -264,7 +264,7 @@ export default function ManagerDashboard() {
             </p>
           </div>
           {currentClub && (
-            <Link className="inline-block px-5 py-2.5 bg-ground text-ink text-sm font-medium hover:bg-surfaceAlt transition-colors" to={`/clubs/${currentClub.slug}`}>
+            <Link className="inline-block shrink-0 whitespace-nowrap px-5 py-2.5 bg-ground text-ink text-sm font-medium hover:bg-surfaceAlt transition-colors" to={`/clubs/${currentClub.slug}`}>
               View Public Dossier
             </Link>
           )}
@@ -409,9 +409,9 @@ export default function ManagerDashboard() {
                 <ClubVisualPlate className="w-full h-52" club={currentClub}/>
 
                 <div>
-                  <div className="flex items-baseline justify-between gap-2 mb-2">
+                  <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-2 mb-2">
                     <label htmlFor="mgr-club-logo" className="block text-sm font-medium text-ink">
-                      Upload New Emblem (<code>multipart/form-data</code>)
+                      Upload New Emblem
                     </label>
                     <span id="logo-file-rules" className="text-xs text-muted">
                       JPG, PNG, WebP · Max 2 MB
