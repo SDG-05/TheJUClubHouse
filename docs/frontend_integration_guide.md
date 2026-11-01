@@ -59,6 +59,21 @@ offline.
    `static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)` URL pattern) and that
    `django-cors-headers` allows `http://localhost:5173`.
 
+### Docker Compose (full stack)
+
+From the repository root, one command boots PostgreSQL, Django, and the Vite frontend together:
+
+```bash
+docker compose up --build
+```
+
+This starts:
+
+- `db` — PostgreSQL 16;
+- `backend` — Django API at `http://localhost:8000/api`;
+- `frontend` — Vite dev server at `http://localhost:5173`, built with
+  `VITE_USE_MOCK=false` and `VITE_API_URL=http://localhost:8000/api`.
+
 ### Logo URL normalization
 
 Django may return a club logo as an absolute URL (`http://localhost:8000/media/...`), a
