@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-ground: #F6F3EC;
+  --bg-surface: #ECE7DC;
+  --bg-surface-alt: #E2DDD0;
+  --text-ink: #161513;
+  --text-muted: #5C5852;
+  --accent: #B83A24;
+  --accent-hover: #9A2E1B;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-ground);
+    color: var(--text-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+    line-height: 0.96;
+  }
+}
+
+/* @design-taste-frontend Step 9: entrance motion & control feedback.
+   Transform/opacity only, and content stays visible when motion is reduced
+   or when scripts fail to load. */
+@keyframes tasteRiseIn {
+  from {
+    opacity: 0.01;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+main > section {
+  animation: tasteRiseIn 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+main > section:nth-of-type(2) {
+  animation-delay: 70ms;
+}
+
+main > section:nth-of-type(3) {
+  animation-delay: 140ms;
+}
+
+main > section:nth-of-type(4) {
+  animation-delay: 210ms;
+}
+
+button:active:not(:disabled),
+a:active {
+  transform: translateY(1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main > section,
+  main > section:nth-of-type(2),
+  main > section:nth-of-type(3),
+  main > section:nth-of-type(4) {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
+  button:active:not(:disabled),
+  a:active {
+    transform: none !important;
+  }
+}
