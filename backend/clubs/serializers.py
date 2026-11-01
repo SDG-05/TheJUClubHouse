@@ -1,5 +1,24 @@
+import json
+
 from rest_framework import serializers
+
 from .models import Club
+
+
+class SocialLinksField(serializers.JSONField):
+    """Accept social links as JSON or as a JSON string from multipart/form-data."""
+
+    def to_internal_value(self, data):
+        if isinstance(data, str):
+            try:
+                data = json.loads(data)
+            except (TypeError, ValueError):
+                raise serializers.ValidationError("Must be a valid JSON object.")
+        if data in (None, ""):
+            return {}
+        if not isinstance(data, dict):
+            raise serializers.ValidationError("Must be a JSON object.")
+        return super().to_internal_value(data)
 
 
 class ManagerBasicSerializer(serializers.Serializer):
@@ -12,10 +31,13 @@ class ManagerBasicSerializer(serializers.Serializer):
 class ClubSerializer(serializers.ModelSerializer):
     manager_details = ManagerBasicSerializer(source='manager', read_only=True)
     member_count = serializers.SerializerMethodField()
-        def update(self, instance, validated_data):
+    social_links = SocialLinksField(required=False)
+
+    def update(self, instance, validated_data):
         request = self.context.get('request')
+        user = getattr(request, 'user', None)
         # Prevent privilege escalation for non-admins
-        if request and getattr(request, 'user', None) and request.user.role != 'ADMIN':
+        if user and getattr(user, 'is_authenticated', False) and user.role != 'ADMIN':
             validated_data.pop('manager', None)
             validated_data.pop('is_published', None)
         return super().update(instance, validated_data)
@@ -29,7 +51,7 @@ class ClubSerializer(serializers.ModelSerializer):
             'created_at', 'updated_at'
         ]
         read_only_fields = [
-            'id', 'slug', 'created_at', 'updated_at', 
+            'id', 'slug', 'created_at', 'updated_at',
             'member_count', 'manager_details'
         ]
 
